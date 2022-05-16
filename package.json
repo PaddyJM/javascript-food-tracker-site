@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/PaddyJM/javascript-food-tracker-site/issues"
   },
-  "homepage": "https://github.com/PaddyJM/javascript-food-tracker-site#readme"
+  "homepage": "https://github.com/PaddyJM/javascript-food-tracker-site#readme",
+  "dependencies": {
+    "http-server": "^14.1.0"
+  }
 }
