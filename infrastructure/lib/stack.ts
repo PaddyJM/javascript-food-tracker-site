@@ -32,7 +32,8 @@ export class FoodTrackerStack extends Stack {
           "X-Amz-Date",
           "Authorization",
           "X-Api-Key",
-          'Access-Control-Allow-Origin'
+          'Access-Control-Allow-Origin',
+          "requestId"
         ],
         allowMethods: ["OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE"],
         allowCredentials: true,

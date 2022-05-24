@@ -1,3 +1,5 @@
+import {v4 as uuid } from "uuid"
+
 export default class FetchWrapper {
   constructor(baseURL) {
     this.baseURL = baseURL;
@@ -24,11 +26,13 @@ export default class FetchWrapper {
   }
 
   _send(method, endpoint, body) {
+    console.log(JSON.stringify(body))
     return fetch(this.baseURL + endpoint, {
       method,
       headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
+        'requestId': uuid(),
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
       },
       body: JSON.stringify(body),
     }).then((response) => response.json()).catch(error => console.error(error));
