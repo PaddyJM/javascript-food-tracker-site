@@ -4,7 +4,7 @@ export default class FetchWrapper {
   }
 
   get(endpoint) {
-    return fetch(this.baseURL + endpoint).then((response) => response.json());
+    return fetch(this.baseURL + endpoint, { headers: { 'Access-Control-Allow-Origin': '*'}}).then((response) => response.json()).catch(error => console.error(error));
   }
 
   put(endpoint, body) {
@@ -28,8 +28,9 @@ export default class FetchWrapper {
       method,
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify(body),
-    }).then((response) => response.json());
+    }).then((response) => response.json()).catch(error => console.error(error));
   }
 }

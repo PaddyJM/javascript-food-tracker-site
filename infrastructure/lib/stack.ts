@@ -27,6 +27,15 @@ export class FoodTrackerStack extends Stack {
 
     const api = new cdk.aws_apigateway.RestApi(this, `${modelName}Api`, {
       defaultCorsPreflightOptions: {
+        allowHeaders: [
+          "Content-Type",
+          "X-Amz-Date",
+          "Authorization",
+          "X-Api-Key",
+          'Access-Control-Allow-Origin'
+        ],
+        allowMethods: ["OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE"],
+        allowCredentials: true,
         allowOrigins: cdk.aws_apigateway.Cors.ALL_ORIGINS,
       },
       restApiName: `${modelName} Service`,
@@ -113,9 +122,12 @@ export class FoodTrackerStack extends Stack {
       },
     ]
 
-    const integrationResponses = [
+    const integrationResponses: cdk.aws_apigateway.IntegrationResponse[] = [
       {
         statusCode: '200',
+        responseParameters: {
+            'method.response.header.Access-Control-Allow-Origin': "'*'",
+          },
       },
       ...errorResponses,
     ]
@@ -146,6 +158,9 @@ export class FoodTrackerStack extends Stack {
                 "requestId": "$context.requestId"
               }`,
             },
+            responseParameters: {
+            'method.response.header.Access-Control-Allow-Origin': "'*'",
+          },
           },
           ...errorResponses,
         ],
@@ -244,9 +259,11 @@ export class FoodTrackerStack extends Stack {
       service: 'dynamodb',
     })
 
-    const methodOptions = {
+    const methodOptions: cdk.aws_apigateway.MethodOptions = {
       methodResponses: [
-        { statusCode: '200' },
+        { statusCode: '200', responseParameters:{
+            'method.response.header.Access-Control-Allow-Origin': true,
+        } },
         { statusCode: '400' },
         { statusCode: '500' },
       ],
