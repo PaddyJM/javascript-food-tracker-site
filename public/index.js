@@ -17,12 +17,10 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
 
   API.post("/foodlogtable", {
-    fields: {
-      Name: { S: name.value },
-      Carbs: { N: carbs.value },
-      Protein: { N: protein.value },
-      Fat: { N: fat.value },
-    },
+    name: name.value,
+    carbs: carbs.value,
+    protein: protein.value,
+    fat: fat.value ,
   }).then((data) => {
     console.log(data);
     if (data.error) {
@@ -48,7 +46,7 @@ const init = () => {
     API.get("/foodlogtable").then((data) => {
       console.log(data)
       data.Items?.forEach((item) => {
-        const calories = calculateCalories(item.Fat.N, item.Protein.N, item.Fat.N)
+        const calories = calculateCalories(item.Carbs.N, item.Protein.N, item.Fat.N)
 
          displayEntry(list, item.Name.S, calories, item.Carbs.N, item.Protein.N, item.Fat.N)
       });
