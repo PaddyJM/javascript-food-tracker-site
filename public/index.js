@@ -3,7 +3,7 @@ import { capitalize, calculateCalories } from "./helpers.js";
 import * as snackbar from "snackbar";
 
 const API = new FetchWrapper(
-  "https://168yhpo157.execute-api.eu-west-2.amazonaws.com/prod/foodlogtable"
+  "https://168yhpo157.execute-api.eu-west-2.amazonaws.com/prod"
 );
 
 const list = document.querySelector("#food-list");
@@ -16,7 +16,7 @@ const fat = document.querySelector("#create-fat");
 form.addEventListener("submit", (event) => {
   event.preventDefault();
 
-  API.post("/", {
+  API.post("/foodlogtable", {
     fields: {
       Name: { S: name.value },
       Carbs: { N: carbs.value },
@@ -45,8 +45,8 @@ form.addEventListener("submit", (event) => {
 });
 
 const init = () => {
-    // the ?pageSize=100 is optional
-    API.get("/").then((data) => {
+    API.get("/foodlogtable").then((data) => {
+      console.log(data)
       data.Items?.forEach((item) => {
         const calories = calculateCalories(item.Fat.N, item.Protein.N, item.Fat.N)
 
